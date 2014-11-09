@@ -21,7 +21,7 @@ base_pkgs="${base_pkgs} ppp usb-modeswitch usbutils"
 base_pkgs="${base_pkgs} apache2 openssh-server udhcpd avahi-daemon"
 
 #Wireless
-base_pkgs="${base_pkgs} wireless-tools wpasupplicant lowpan-tools wvdial lshw hostapd"
+base_pkgs="${base_pkgs} wireless-tools wpasupplicant lowpan-tools wvdial lshw hostapd bluez bluez-compat"
 
 #Flasher
 base_pkgs="${base_pkgs} rsync"
