@@ -44,7 +44,7 @@ debootstrap_is_installed () {
 }
 
 debootstrap_what_version () {
-	test_debootstrap=$(/usr/sbin/debootstrap --version | awk '{print $2}' | awk -F"." '{print $3}')
+	test_debootstrap=$(/usr/sbin/debootstrap --version | cut -f3 -d.)
 	echo "Log: debootstrap version: 1.0.$test_debootstrap"
 }
 
@@ -52,7 +52,7 @@ debootstrap_is_installed
 debootstrap_what_version
 
 #if [[ "$test_debootstrap" < "$minimal_debootstrap" ]] ; then
-if [ ! "x$test_debootstrap" = "x$minimal_debootstrap" ] ; then
+if [ "$test_debootstrap" -lt "$minimal_debootstrap" ] ; then
 	echo "Log: Installing minimal debootstrap version: 1.0.${minimal_debootstrap}..."
 	wget https://rcn-ee.com/mirror/debootstrap/debootstrap_1.0.${minimal_debootstrap}_all.deb
 	sudo dpkg -i debootstrap_1.0.${minimal_debootstrap}_all.deb
