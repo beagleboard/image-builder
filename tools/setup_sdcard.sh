@@ -1128,9 +1128,9 @@ populate_rootfs () {
 		cmdline="${cmdline} init=/lib/systemd/systemd"
 	fi
 
-	if [ "x${conf_board}" = "xam335x_boneblack" ] || [ "x${conf_board}" = "xam335x_evm" ] ; then
-		cmdline="${cmdline} cape_universal=enable"
-	fi
+	#if [ "x${conf_board}" = "xam335x_boneblack" ] || [ "x${conf_board}" = "xam335x_evm" ] ; then
+	#	cmdline="${cmdline} cape_universal=enable"
+	#fi
 
 	unset kms_video
 
@@ -1264,8 +1264,7 @@ populate_rootfs () {
 		echo "# The primary network interface" >> ${wfile}
 
 		if [ "${DISABLE_ETH}" ] ; then
-			echo "#auto eth0" >> ${wfile}
-			echo "#iface eth0 inet dhcp" >> ${wfile}
+			echo "#${DISABLE_ETH}" >> ${wfile}
 		else
 			echo "auto eth0"  >> ${wfile}
 			echo "iface eth0 inet dhcp" >> ${wfile}
@@ -1303,11 +1302,12 @@ populate_rootfs () {
 
 		echo "# Ethernet/RNDIS gadget (g_ether)" >> ${wfile}
 		echo "# Used by: /opt/scripts/boot/autoconfigure_usb0.sh" >> ${wfile}
+		echo "auto usb0" >> ${wfile}
+		echo "allow-hotplug usb0" >> ${wfile}
 		echo "iface usb0 inet static" >> ${wfile}
 		echo "    address 192.168.7.2" >> ${wfile}
 		echo "    netmask 255.255.255.252" >> ${wfile}
 		echo "    network 192.168.7.0" >> ${wfile}
-		echo "    gateway 192.168.7.1" >> ${wfile}
 
 		if [ -f ${TEMPDIR}/disk/var/www/index.html ] ; then
 			rm -f ${TEMPDIR}/disk/var/www/index.html || true
