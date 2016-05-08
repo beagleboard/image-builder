@@ -1,4 +1,4 @@
-#!/bin/sh -e
+#!/bin/bash -e
 #
 # Copyright (c) 2012-2016 Robert Nelson <robertcnelson@gmail.com>
 #

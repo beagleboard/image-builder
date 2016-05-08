@@ -1,4 +1,4 @@
-#!/bin/sh -e
+#!/bin/bash -e
 #
 # Copyright (c) 2013 Robert Nelson <robertcnelson@gmail.com>
 #
@@ -75,8 +75,8 @@ run_roostock_ng () {
 	fi
 
 	/bin/bash -e "${OIB_DIR}/scripts/install_dependencies.sh" || { exit 1 ; }
-	/bin/sh -e "${OIB_DIR}/scripts/debootstrap.sh" || { exit 1 ; }
-	/bin/sh -e "${OIB_DIR}/scripts/chroot.sh" || { exit 1 ; }
+	/bin/bash -e "${OIB_DIR}/scripts/debootstrap.sh" || { exit 1 ; }
+	/bin/bash -e "${OIB_DIR}/scripts/chroot.sh" || { exit 1 ; }
 	sudo rm -rf ${tempdir}/ || true
 }
 

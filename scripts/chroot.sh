@@ -1,4 +1,4 @@
-#!/bin/sh -e
+#!/bin/bash -ex
 #
 # Copyright (c) 2012-2016 Robert Nelson <robertcnelson@gmail.com>
 #
@@ -377,6 +377,14 @@ if [ "x${repo_external}" = "xenable" ] ; then
 	echo "#deb-src [arch=${repo_external_arch}] ${repo_external_server} ${repo_external_dist} ${repo_external_components}" >> ${wfile}
 fi
 
+if [ "x${repo_flat}" = "xenable" ] ; then
+	echo "" >> ${wfile}
+	for component in "${repo_flat_components[@]}" ; do
+		echo "deb ${repo_flat_server} ${component}" >> ${wfile}
+		echo "#deb-src ${repo_flat_server} ${component}" >> ${wfile}
+	done
+fi
+
 if [ ! "x${repo_nodesource}" = "x" ] ; then
 	echo "" >> ${wfile}
 	echo "deb https://deb.nodesource.com/${repo_nodesource} ${deb_codename} main" >> ${wfile}
@@ -407,6 +415,12 @@ fi
 if [ "x${repo_external}" = "xenable" ] ; then
 	if [ ! "x${repo_external_key}" = "x" ] ; then
 		sudo cp -v "${OIB_DIR}/target/keyring/${repo_external_key}" "${tempdir}/tmp/${repo_external_key}"
+	fi
+fi
+
+if [ "x${repo_flat}" = "xenable" ] ; then
+	if [ ! "x${repo_flat_key}" = "x" ] ; then
+		sudo cp -v "${OIB_DIR}/target/keyring/${repo_flat_key}" "${tempdir}/tmp/${repo_flat_key}"
 	fi
 fi
 
@@ -570,6 +584,10 @@ cat > "${DIR}/chroot_script.sh" <<-__EOF__
 		if [ "x${repo_external}" = "xenable" ] ; then
 			apt-key add /tmp/${repo_external_key}
 			rm -f /tmp/${repo_external_key} || true
+		fi
+		if [ "x${repo_flat}" = "xenable" ] ; then
+			apt-key add /tmp/${repo_flat_key}
+			rm -f /tmp/${repo_flat_key} || true
 		fi
 
 		apt-get update
@@ -991,14 +1009,14 @@ if [ -n "${early_chroot_script}" -a -r "${DIR}/target/chroot/${early_chroot_scri
 	report_size
 	echo "Calling early_chroot_script script: ${early_chroot_script}"
 	sudo cp -v "${DIR}/.project" "${tempdir}/etc/oib.project"
-	sudo /bin/sh -e "${DIR}/target/chroot/${early_chroot_script}" "${tempdir}"
+	sudo /bin/bash -e "${DIR}/target/chroot/${early_chroot_script}" "${tempdir}"
 	early_chroot_script=""
 	sudo rm -f "${tempdir}/etc/oib.project" || true
 fi
 
 chroot_mount
-sudo chroot "${tempdir}" /bin/sh -e chroot_script.sh
-echo "Log: Complete: [sudo chroot ${tempdir} /bin/sh -e chroot_script.sh]"
+sudo chroot "${tempdir}" /bin/bash -e chroot_script.sh
+echo "Log: Complete: [sudo chroot ${tempdir} /bin/bash -e chroot_script.sh]"
 
 #Do /etc/issue & /etc/issue.net after chroot_script:
 #
@@ -1076,7 +1094,7 @@ if [ -n "${chroot_script}" -a -r "${DIR}/target/chroot/${chroot_script}" ] ; the
 	echo "Calling chroot_script script: ${chroot_script}"
 	sudo cp -v "${DIR}/.project" "${tempdir}/etc/oib.project"
 	sudo cp -v "${DIR}/target/chroot/${chroot_script}" "${tempdir}/final.sh"
-	sudo chroot "${tempdir}" /bin/sh -e final.sh
+	sudo chroot "${tempdir}" /bin/bash -e final.sh
 	sudo rm -f "${tempdir}/final.sh" || true
 	sudo rm -f "${tempdir}/etc/oib.project" || true
 	chroot_script=""
@@ -1096,7 +1114,7 @@ cp -v "${DIR}/.project" "${DIR}/deploy/${export_filename}/image-builder.project"
 
 if [ -n "${chroot_after_hook}" -a -r "${DIR}/${chroot_after_hook}" ] ; then
 	report_size
-	echo "Calling chroot_after_hook script: ${chroot_after_hook}"
+	echo "Calling chroot_after_hook script: ${DIR}/${chroot_after_hook}"
 	. "${DIR}/${chroot_after_hook}"
 	chroot_after_hook=""
 fi
@@ -1156,8 +1174,8 @@ __EOF__
 
 ###MUST BE LAST...
 sudo mv "${DIR}/cleanup_script.sh" "${tempdir}/cleanup_script.sh"
-sudo chroot "${tempdir}" /bin/sh -e cleanup_script.sh
-echo "Log: Complete: [sudo chroot ${tempdir} /bin/sh -e cleanup_script.sh]"
+sudo chroot "${tempdir}" /bin/bash -e cleanup_script.sh
+echo "Log: Complete: [sudo chroot ${tempdir} /bin/bash -e cleanup_script.sh]"
 
 #add /boot/uEnv.txt update script
 if [ -d "${tempdir}/etc/kernel/postinst.d/" ] ; then
