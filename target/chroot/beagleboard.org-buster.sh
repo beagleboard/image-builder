@@ -97,6 +97,13 @@ setup_system () {
 	echo "" >> /etc/securetty
 	echo "#USB Gadget Serial Port" >> /etc/securetty
 	echo "ttyGS0" >> /etc/securetty
+
+	#make the sound card work by default
+	if [ -f /etc/alsa/tlv320aic3104.state.txt ] ; then
+		cp /etc/alsa/tlv320aic3104.state.txt /var/lib/alsa/asound.state
+		cp /etc/alsa/tlv320aic3104.conf.txt /etc/asound.conf
+	fi
+
 }
 
 setup_desktop () {
