@@ -945,9 +945,10 @@ cat > "${DIR}/chroot_script.sh" <<-__EOF__
 				passwd -l root || true
 			else
 				passwd <<-EOF
-				root
-				root
+				${rfs_root_password}
+				${rfs_root_password}
 				EOF
+				echo "export PATH=\$PATH:/usr/local/sbin:/usr/sbin:/sbin" >> /root/.bashrc
 			fi
 
 			sed -i -e 's:#EXTRA_GROUPS:EXTRA_GROUPS:g' /etc/adduser.conf
