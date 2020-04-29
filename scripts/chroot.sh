@@ -756,6 +756,10 @@ cat > "${DIR}/chroot_script.sh" <<-__EOF__
 				sed -i -e 's:#Banner none:Banner /etc/issue.net:g' /etc/ssh/sshd_config
 			fi
 		fi
+
+		# set system type
+		echo "ICON_NAME=computer-embedded" > /etc/machine-info
+		echo "CHASSIS=embedded" >> /etc/machine-info
 	}
 
 	set_locale () {
