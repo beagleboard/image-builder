@@ -746,6 +746,16 @@ cat > "${DIR}/chroot_script.sh" <<-__EOF__
 		fi
 	}
 
+	install_python_pkgs () {
+		if [ ! "x${python3_pkgs}" = "x" ] ; then
+			if [ ! "x${python3_extra_index}" = "x" ] ; then
+				python3 -m pip install --extra-index-url ${python3_extra_index} ${python3_pkgs}
+			else
+				python3 -m pip install ${python3_pkgs}
+			fi
+		fi
+	}
+
 	system_tweaks () {
 		echo "Log: (chroot): system_tweaks"
 		echo "[options]" > /etc/e2fsck.conf
@@ -1156,6 +1166,7 @@ cat > "${DIR}/chroot_script.sh" <<-__EOF__
 
 	install_pkg_updates
 	install_pkgs
+	install_python_pkgs
 	system_tweaks
 	set_locale
 	if [ "x${chroot_not_reliable_deborphan}" = "xenable" ] ; then
@@ -1399,6 +1410,8 @@ cat > "${DIR}/cleanup_script.sh" <<-__EOF__
 		fi
 		apt-get clean
 		rm -rf /var/lib/apt/lists/*
+
+		rm -rf /root/.cache/pip
 
 		if [ -d /var/cache/c9-core-installer/ ] ; then
 			rm -rf /var/cache/c9-core-installer/ || true
