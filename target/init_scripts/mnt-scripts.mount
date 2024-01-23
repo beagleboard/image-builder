@@ -1,0 +1,13 @@
+[Unit]
+  Description=Shared Script Repo
+  Requires=network-online.target
+  After=network-online.service
+
+[Mount]
+  What=//192.168.1.25/scripts
+  Where=/mnt/scripts
+  Options=credentials=/etc/cred-andromeda,uid=jennifer,gid=jennifer
+  Type=cifs
+
+[Install]
+  WantedBy=multi-user.target
