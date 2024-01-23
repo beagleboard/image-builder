@@ -1,0 +1,13 @@
+[Unit]
+  Description=Sharing Ildico folder
+  Requires=network-online.target
+  After=network-online.service
+
+[Mount]
+  What=//192.168.1.50/Linux
+  Where=/mnt/linux
+  Options=vers=3.0,credentials=/etc/cred-ildico,uid=jennifer,gid=jennifer
+  Type=cifs
+
+[Install]
+  WantedBy=multi-user.target
