@@ -176,9 +176,9 @@ install_git_repos () {
 	git_branch="v6.1.x-Beagle"
 	git_clone_branch
 
-	#git_repo="https://github.com/beagleboard/bb.org-overlays"
-	#git_target_dir="/opt/source/bb.org-overlays"
-	#git_clone
+	git_repo="https://github.com/beagleboard/bb.org-overlays"
+	git_target_dir="/opt/source/bb.org-overlays"
+	git_clone
 
 	git_repo="https://github.com/mvduin/bbb-pin-utils"
 	git_target_dir="/opt/source/bbb-pin-utils"
