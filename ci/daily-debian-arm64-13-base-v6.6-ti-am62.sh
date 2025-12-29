@@ -1,13 +1,15 @@
 #!/bin/bash
+set -euo pipefail
 
-export apt_proxy=192.168.1.10:3142/
+export http_proxy="http://192.168.1.10:3142/"
+export https_proxy="shttps_proxy"
 
 config=bb.org-debian-trixie-base-v6.6-ti-arm64-k3-am62
 filesize=8gb
 rootfs="debian-arm64-13-base-v6.6-ti"
 
 compress_snapshot_image () {
-	yml_file="${device}-${export_filename}-${filesize}.img.xz.yml.txt"
+	yml_file="${device}-${export_filename}-${filesize}.img.xz.yml.txt" 
 	sudo -uvoodoo mkdir -p /mnt/mirror/rcn-ee.us/rootfs/${rootfs}/${time}/
 	sync
 
