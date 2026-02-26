@@ -80,7 +80,7 @@ if [ -d ./deploy/${export_filename}/ ] ; then
 
 	r_description="no desktop environment"
 
-	r_name="v6.12.x (LTS-Dec-2026)"
+	r_name="v6.12.x (LTS-Dec-2028)"
 	device="am335x" ; compress_snapshot_image
 
 	rm -rf ${tempdir} || true
