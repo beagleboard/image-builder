@@ -100,27 +100,27 @@ if [ -d ./deploy/${export_filename}/ ] ; then
 	r_processor="TI AM67A (J722S)"
 	r_devices="beagle-am67"
 
-	r_name="v6.18.x-k3 XFCE (LTS-Dec-2027)"
+	r_name="v6.18.x-k3 XFCE (LTS-Dec-2028)"
 	device="beagley-ai" ; compress_snapshot_image
 
 	r_board="BeagleBone AI-64"
 	r_processor="TI TDA4VM"
 	r_devices="beagle-tda4vm"
 
-	r_name="v6.18.x-k3 XFCE (Recommended) (LTS-Dec-2027)"
+	r_name="v6.18.x-k3 XFCE (Recommended) (LTS-Dec-2028)"
 	device="bbai64" ; compress_snapshot_image
 
-	r_name="v6.18.x-k3 XFCE Flasher (Recommended) (LTS-Dec-2027)"
+	r_name="v6.18.x-k3 XFCE Flasher (Recommended) (LTS-Dec-2028)"
 	device="bbai64-emmc-flasher" ; compress_snapshot_image
 
 	r_board="BeaglePlay"
 	r_processor="TI AM62"
 	r_devices="beagle-am62"
 
-	r_name="v6.18.x-k3 XFCE (Recommended) (LTS-Dec-2027) (Vulkan/Mesa 26.0.x)"
+	r_name="v6.18.x-k3 XFCE (Recommended) (LTS-Dec-2028) (Vulkan/Mesa 26.0.x)"
 	device="beagleplay" ; compress_snapshot_image
 
-	r_name="v6.18.x-k3 XFCE Flasher (Recommended) (LTS-Dec-2027) (Vulkan/Mesa 26.0.x)"
+	r_name="v6.18.x-k3 XFCE Flasher (Recommended) (LTS-Dec-2028) (Vulkan/Mesa 26.0.x)"
 	device="beagleplay-emmc-flasher" ; compress_snapshot_image
 
 	rm -rf ${tempdir} || true

@@ -110,37 +110,37 @@ if [ -d ./deploy/${export_filename}/ ] ; then
 	r_processor="TI AM67A (J722S)"
 	r_devices="beagle-am67"
 
-	r_name="v6.18.x-k3 IoT (LTS-Dec-2027)"
+	r_name="v6.18.x-k3 IoT (LTS-Dec-2028)"
 	device="beagley-ai" ; compress_snapshot_image
 
 	r_board="BeagleBone AI-64"
 	r_processor="TI TDA4VM"
 	r_devices="beagle-tda4vm"
 
-	r_name="v6.18.x-k3 IoT (Recommended) (LTS-Dec-2027)"
+	r_name="v6.18.x-k3 IoT (Recommended) (LTS-Dec-2028)"
 	device="bbai64" ; compress_snapshot_image
 
-	r_name="v6.18.x-k3 IoT Flasher (Recommended) (LTS-Dec-2027)"
+	r_name="v6.18.x-k3 IoT Flasher (Recommended) (LTS-Dec-2028)"
 	device="bbai64-emmc-flasher" ; compress_snapshot_image
 
 	r_board="BeaglePlay"
 	r_processor="TI AM62"
 	r_devices="beagle-am62"
 
-	r_name="v6.18.x-k3 IoT (Recommended) (LTS-Dec-2027)"
+	r_name="v6.18.x-k3 IoT (Recommended) (LTS-Dec-2028)"
 	device="beagleplay" ; compress_snapshot_image
 
-	r_name="v6.18.x-k3 IoT Flasher (Recommended) (LTS-Dec-2027)"
+	r_name="v6.18.x-k3 IoT Flasher (Recommended) (LTS-Dec-2028)"
 	device="beagleplay-emmc-flasher" ; compress_snapshot_image
 
 	r_board="PocketBeagle 2"
 	r_processor="TI AM62"
 	r_devices="pocketbeagle2-am62"
 
-	r_name="v6.18.x-k3 IoT (LTS-Dec-2027)"
+	r_name="v6.18.x-k3 IoT (LTS-Dec-2028)"
 	device="pocketbeagle2" ; compress_snapshot_image
 
-	r_name="v6.18.x-k3 IoT (TechLab Workshop) (LTS-Dec-2027)"
+	r_name="v6.18.x-k3 IoT (TechLab Workshop) (LTS-Dec-2028)"
 	device="pocketbeagle2-workshop" ; compress_snapshot_image
 
 	rm -rf ${tempdir} || true
