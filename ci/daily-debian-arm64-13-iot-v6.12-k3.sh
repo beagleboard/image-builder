@@ -122,7 +122,7 @@ if [ -d ./deploy/${export_filename}/ ] ; then
 	device="beagleplay" ; compress_snapshot_image
 
 	r_board="PocketBeagle 2"
-	r_board_adv="( and PocketBeagle 2 Industrial)
+	r_board_adv="( and PocketBeagle 2 Industrial)"
 	r_processor="TI AM62"
 	r_devices="pocketbeagle2-am62"
 
