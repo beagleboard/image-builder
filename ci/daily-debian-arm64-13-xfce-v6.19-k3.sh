@@ -9,13 +9,18 @@ rootfs="debian-arm64-13-xfce-v6.19-k3"
 debian_short="Debian 13"
 debian_long="Debian 13 (Trixie)"
 
+#https://www.kernel.org/category/releases.html
+r_kernel="6.19"
+unset r_support_date
+unset r_board_adv
+
 compress_snapshot_image () {
 	yml_file="${device}-${export_filename}-${filesize}.img.xz.yml.txt"
 	sudo -uvoodoo mkdir -p /mnt/mirror/rcn-ee.us/rootfs/${rootfs}/${time}/
 	sync
 
 	echo "- name: ${r_board} ${debian_short} ${r_name}" >> ${yml_file}
-	echo "  description: ${debian_long} with ${r_description} for ${r_board} based on ${r_processor} processor" >> ${yml_file}
+	echo "  description: ${debian_long} with ${r_description} for ${r_board}${r_board_adv} based on ${r_processor} processor running linux ${r_kernel}}." >> ${yml_file}
 	echo "  icon: https://media.githubusercontent.com/media/beagleboard/bb-imager-rs/refs/heads/main/assets/os/debian.png" >> ${yml_file}
 	echo "  url: https://files.beagle.cc/file/beagleboard-public-2021/images/${device}-${export_filename}-${filesize}.img.xz" >> ${yml_file}
 	echo "  bmap: https://raw.githubusercontent.com/beagleboard/distros/refs/heads/main/bmap-temp/${device}-${export_filename}-${filesize}.bmap" >> ${yml_file}
@@ -67,8 +72,8 @@ source .project
 if [ -d ./deploy/${export_filename}/ ] ; then
 	cd ./deploy/${export_filename}/
 
-	echo "sudo ./setup_sdcard.sh --img-${filesize} bbai64-${export_filename} --dtb bbai64"
-	sudo ./setup_sdcard.sh --img-${filesize} bbai64-${export_filename} --dtb bbai64
+	echo "sudo ./setup_sdcard.sh --img-${filesize} bbai64-${export_filename} --dtb bbai64-swap"
+	sudo ./setup_sdcard.sh --img-${filesize} bbai64-${export_filename} --dtb bbai64-swap
 	mv ./*.img ../
 	cp -v ./dpkg-sbom.txt ../ || true
 
@@ -85,27 +90,30 @@ if [ -d ./deploy/${export_filename}/ ] ; then
 	cd ../
 
 	r_description="the Xfce Desktop"
-
-	r_name="v6.19.x-k3 XFCE (Stable v6.19.x)"
-
-	r_board="BeagleBone AI-64"
-	r_processor="TI TDA4VM"
-	r_devices="beagle-tda4vm"
-
-	device="bbai64" ; compress_snapshot_image
+	r_short_desc="XFCE"
 
 	r_board="BeagleY-AI"
+	unset r_board_adv
 	r_processor="TI AM67A (J722S)"
 	r_devices="beagle-am67"
 
+	r_name="v${r_kernel}.x-k3 ${r_short_desc}"
 	device="beagley-ai" ; compress_snapshot_image
 
-	r_name="v6.19.x-k3 XFCE (Stable v6.19.x) (Vulkan/Mesa 26.0.x)"
+	r_board="BeagleBone AI-64"
+	unset r_board_adv
+	r_processor="TI TDA4VM"
+	r_devices="beagle-tda4vm"
+
+	r_name="v${r_kernel}.x-k3 ${r_short_desc}"
+	device="bbai64" ; compress_snapshot_image
 
 	r_board="BeaglePlay"
+	unset r_board_adv
 	r_processor="TI AM62"
 	r_devices="beagle-am62"
 
+	r_name="v${r_kernel}.x-k3 ${r_short_desc} (Vulkan/Mesa 26.0.x)"
 	device="beagleplay" ; compress_snapshot_image
 
 	rm -rf ${tempdir} || true

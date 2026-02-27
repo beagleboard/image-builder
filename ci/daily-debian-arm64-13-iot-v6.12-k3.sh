@@ -9,13 +9,18 @@ rootfs="debian-arm64-13-iot-v6.12-k3"
 debian_short="Debian 13"
 debian_long="Debian 13 (Trixie)"
 
+#https://www.kernel.org/category/releases.html
+r_kernel="6.12"
+r_support_date="Dec, 2028"
+unset r_board_adv
+
 compress_snapshot_image () {
 	yml_file="${device}-${export_filename}-${filesize}.img.xz.yml.txt"
 	sudo -uvoodoo mkdir -p /mnt/mirror/rcn-ee.us/rootfs/${rootfs}/${time}/
 	sync
 
 	echo "- name: ${r_board} ${debian_short} ${r_name}" >> ${yml_file}
-	echo "  description: ${debian_long} with ${r_description} for ${r_board} based on ${r_processor} processor" >> ${yml_file}
+	echo "  description: ${debian_long} with ${r_description} for ${r_board}${r_board_adv} based on ${r_processor} processor running linux ${r_kernel}, mainline support till ${r_support_date}." >> ${yml_file}
 	echo "  icon: https://media.githubusercontent.com/media/beagleboard/bb-imager-rs/refs/heads/main/assets/os/debian.png" >> ${yml_file}
 	echo "  url: https://files.beagle.cc/file/beagleboard-public-2021/images/${device}-${export_filename}-${filesize}.img.xz" >> ${yml_file}
 	echo "  bmap: https://raw.githubusercontent.com/beagleboard/distros/refs/heads/main/bmap-temp/${device}-${export_filename}-${filesize}.bmap" >> ${yml_file}
@@ -67,8 +72,8 @@ source .project
 if [ -d ./deploy/${export_filename}/ ] ; then
 	cd ./deploy/${export_filename}/
 
-	echo "sudo ./setup_sdcard.sh --img-${filesize} bbai64-${export_filename} --dtb bbai64"
-	sudo ./setup_sdcard.sh --img-${filesize} bbai64-${export_filename} --dtb bbai64
+	echo "sudo ./setup_sdcard.sh --img-${filesize} bbai64-${export_filename} --dtb bbai64-swap"
+	sudo ./setup_sdcard.sh --img-${filesize} bbai64-${export_filename} --dtb bbai64-swap
 	mv ./*.img ../
 	cp -v ./dpkg-sbom.txt ../ || true
 
@@ -90,31 +95,38 @@ if [ -d ./deploy/${export_filename}/ ] ; then
 	cd ../
 
 	r_description="no desktop environment"
-
-	r_name="v6.12.x-k3 IoT (LTS-Dec-2026)"
-
-	r_board="BeagleBone AI-64"
-	r_processor="TI TDA4VM"
-	r_devices="beagle-tda4vm"
-
-	device="bbai64" ; compress_snapshot_image
+	r_short_desc="IoT"
 
 	r_board="BeagleY-AI"
+	unset r_board_adv
 	r_processor="TI AM67A (J722S)"
 	r_devices="beagle-am67"
 
+	r_name="v${r_kernel}.x-k3 ${r_short_desc}"
 	device="beagley-ai" ; compress_snapshot_image
 
+	r_board="BeagleBone AI-64"
+	unset r_board_adv
+	r_processor="TI TDA4VM"
+	r_devices="beagle-tda4vm"
+
+	r_name="v${r_kernel}.x-k3 ${r_short_desc}"
+	device="bbai64" ; compress_snapshot_image
+
 	r_board="BeaglePlay"
+	unset r_board_adv
 	r_processor="TI AM62"
 	r_devices="beagle-am62"
 
+	r_name="v${r_kernel}.x-k3 ${r_short_desc}"
 	device="beagleplay" ; compress_snapshot_image
 
 	r_board="PocketBeagle 2"
+	r_board_adv="( and PocketBeagle 2 Industrial)
 	r_processor="TI AM62"
 	r_devices="pocketbeagle2-am62"
 
+	r_name="v${r_kernel}.x-k3 ${r_short_desc}"
 	device="pocketbeagle2" ; compress_snapshot_image
 
 	rm -rf ${tempdir} || true
