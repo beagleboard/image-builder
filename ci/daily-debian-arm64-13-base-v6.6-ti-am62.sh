@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 
 export apt_proxy=192.168.1.10:3142/
 
