@@ -388,12 +388,6 @@ bionic|focal|jammy|noble)
 	;;
 esac
 
-if [ "x${repo_external}" = "xenable" ] ; then
-	echo "" >> ${wfile}
-	echo "deb [trusted=yes arch=${repo_external_arch}] ${repo_external_server} ${repo_external_dist} ${repo_external_components}" >> ${wfile}
-	echo "#deb-src [trusted=yes arch=${repo_external_arch}] ${repo_external_server} ${repo_external_dist} ${repo_external_components}" >> ${wfile}
-fi
-
 if [ "x${repo_flat}" = "xenable" ] ; then
 	for component in "${repo_flat_components[@]}" ; do
 		echo "" >> ${wfile}
@@ -485,8 +479,15 @@ fi
 
 if [ "x${repo_external}" = "xenable" ] ; then
 	if [ ! "x${repo_external_key}" = "x" ] ; then
-		sudo cp -v "${OIB_DIR}/target/keyring/${repo_external_key}" "${tempdir}/tmp/${repo_external_key}"
+		echo "deb [trusted=yes arch=${repo_external_arch} signed-by=/usr/share/keyrings/${repo_external_key}] ${repo_external_server} ${repo_external_dist} ${repo_external_components}" > /tmp/repo.list
+		echo "#deb-src [trusted=yes arch=${repo_external_arch} signed-by=/usr/share/keyrings/${repo_external_key}] ${repo_external_server} ${repo_external_dist} ${repo_external_components}" >> /tmp/repo.list
+		sudo cp -v "${OIB_DIR}/target/keyring/${repo_external_key}" "${tempdir}/usr/share/keyrings/${repo_external_key}"
+	else
+		echo "deb [trusted=yes arch=${repo_external_arch}] ${repo_external_server} ${repo_external_dist} ${repo_external_components}" > /tmp/repo.list
+		echo "#deb-src [trusted=yes arch=${repo_external_arch}] ${repo_external_server} ${repo_external_dist} ${repo_external_components}" >> /tmp/repo.list
 	fi
+	sudo mv /tmp/repo.list "${tempdir}/etc/apt/sources.list.d/repo_external.list"
+	sudo chown root:root "${tempdir}/etc/apt/sources.list.d/repo_external.list"
 fi
 
 if [ "x${repo_flat}" = "xenable" ] ; then
@@ -599,12 +600,6 @@ cat > "${DIR}/chroot_script.sh" <<-__EOF__
 		if [ -f /tmp/repos.azulsystems.com.pubkey.asc ] ; then
 			apt-key add /tmp/repos.azulsystems.com.pubkey.asc
 			rm -f /tmp/repos.azulsystems.com.pubkey.asc || true
-		fi
-		if [ "x${repo_external}" = "xenable" ] ; then
-			if [ ! "x${repo_external_key}" = "x" ] ; then
-				apt-key add /tmp/${repo_external_key}
-				rm -f /tmp/${repo_external_key} || true
-			fi
 		fi
 		if [ "x${repo_flat}" = "xenable" ] ; then
 			apt-key add /tmp/${repo_flat_key}
