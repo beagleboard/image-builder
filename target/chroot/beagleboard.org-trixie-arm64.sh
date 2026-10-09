@@ -132,6 +132,26 @@ install_git_repos () {
 	git_clone
 }
 
+setup_workshop () {
+	if [ -f /opt/bb-code-server/app/bin/code-server ] ; then
+		mkdir -p /opt/bb-code-server/extensions/
+
+		echo "bb-code-server: Installing: ms-python.python"
+		/opt/bb-code-server/app/bin/code-server --auth none --disable-telemetry --disable-update-check --extensions-dir /opt/bb-code-server/extensions/ --install-extension ms-python.python --force || true
+		echo "bb-code-server: *****************"
+
+		echo "bb-code-server: Installing: rust-lang.rust-analyzer"
+		/opt/bb-code-server/app/bin/code-server --auth none --disable-telemetry --disable-update-check --extensions-dir /opt/bb-code-server/extensions/ --install-extension rust-lang.rust-analyzer --force || true
+		echo "bb-code-server: *****************"
+
+		echo "bb-code-server: --list-extensions"
+		/opt/bb-code-server/app/bin/code-server --auth none --disable-telemetry --disable-update-check --extensions-dir /opt/bb-code-server/extensions/ --list-extensions
+		echo "bb-code-server: *****************"
+
+		chown -R ${rfs_username}:${rfs_username} /opt/bb-code-server/extensions/ || true
+	fi
+}
+
 other_source_links () {
 	chown -R ${rfs_username}:${rfs_username} /opt/source/
 }
@@ -151,6 +171,8 @@ if [ -f /usr/bin/git ] ; then
 	git config --global --unset-all user.name
 	chown ${rfs_username}:${rfs_username} /home/${rfs_username}/.gitconfig
 fi
+
+setup_workshop
 
 other_source_links
 #
