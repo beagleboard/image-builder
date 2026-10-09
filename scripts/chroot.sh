@@ -1574,7 +1574,7 @@ EOF
 	SYFT_OUTPUT="${DIR}/deploy/${export_filename}/syft.spdx.json"
 
 	#https://github.com/raspberrypi/cve-list
-	/usr/bin/syft scan -c "$SYFT_CONF" dir:"${tempdir}" --exclude './proc/**' --exclude './sys/**' --exclude './dev/**'  --exclude './run/**' -o json --file "$SYFT_OUTPUT"
+	/usr/bin/syft scan -c "$SYFT_CONF" dir:"${tempdir}" --exclude './proc/**' --exclude './sys/**' --exclude './dev/**'  --exclude './run/**' --output json="$SYFT_OUTPUT"
 	xz "$SYFT_OUTPUT"
 fi
 
