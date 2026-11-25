@@ -89,23 +89,23 @@ if [ -d ./deploy/${export_filename}/ ] ; then
 	mv ./*.img ../
 	cp -v ./syft.spdx.json.xz ../ || true
 
-	echo "sudo ./setup_sdcard.sh --img-${filesize} beagley-ai-${export_filename} --dtb beagley-ai"
-	sudo ./setup_sdcard.sh --img-${filesize} beagley-ai-${export_filename} --dtb beagley-ai
-	mv ./*.img ../
-	cp -v ./syft.spdx.json.xz ../ || true
+	#echo "sudo ./setup_sdcard.sh --img-${filesize} beagley-ai-${export_filename} --dtb beagley-ai"
+	#sudo ./setup_sdcard.sh --img-${filesize} beagley-ai-${export_filename} --dtb beagley-ai
+	#mv ./*.img ../
+	#cp -v ./syft.spdx.json.xz ../ || true
 
 	cd ../
 
 	r_description="the Xfce Desktop"
 	r_short_desc="XFCE"
 
-	r_board="BeagleY-AI"
-	unset r_board_adv
-	r_processor="TI AM67A (J722S)"
-	r_devices="beagle-am67"
+	#r_board="BeagleY-AI"
+	#unset r_board_adv
+	#r_processor="TI AM67A (J722S)"
+	#r_devices="beagle-am67"
 
-	r_name="v${r_kernel}.x-k3 ${r_short_desc}"
-	device="beagley-ai" ; compress_snapshot_image
+	#r_name="v${r_kernel}.x-k3 ${r_short_desc}"
+	#device="beagley-ai" ; compress_snapshot_image
 
 	r_board="BeagleBone AI-64"
 	unset r_board_adv

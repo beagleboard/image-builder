@@ -89,33 +89,33 @@ if [ -d ./deploy/${export_filename}/ ] ; then
 	mv ./*.img ../
 	cp -v ./syft.spdx.json.xz ../ || true
 
-	echo "sudo ./setup_sdcard.sh --img-${filesize} beagley-ai-${export_filename} --dtb beagley-ai"
-	sudo ./setup_sdcard.sh --img-${filesize} beagley-ai-${export_filename} --dtb beagley-ai
-	mv ./*.img ../
-	cp -v ./syft.spdx.json.xz ../ || true
+	#echo "sudo ./setup_sdcard.sh --img-${filesize} beagley-ai-${export_filename} --dtb beagley-ai"
+	#sudo ./setup_sdcard.sh --img-${filesize} beagley-ai-${export_filename} --dtb beagley-ai
+	#mv ./*.img ../
+	#cp -v ./syft.spdx.json.xz ../ || true
 
 	echo "sudo ./setup_sdcard.sh --img-${filesize} pocketbeagle2-${export_filename} --dtb pocketbeagle2-swap"
 	sudo ./setup_sdcard.sh --img-${filesize} pocketbeagle2-${export_filename} --dtb pocketbeagle2-swap
 	mv ./*.img ../
 	cp -v ./syft.spdx.json.xz ../ || true
 
-	echo "sudo ./setup_sdcard.sh --img-${filesize} pocketbeagle2-workshop-${export_filename} --dtb pocketbeagle2-swap --enable-load-pb2-workshop"
-	sudo ./setup_sdcard.sh --img-${filesize} pocketbeagle2-workshop-${export_filename} --dtb pocketbeagle2-swap --enable-load-pb2-workshop
-	mv ./*.img ../
-	cp -v ./syft.spdx.json.xz ../ || true
+	#echo "sudo ./setup_sdcard.sh --img-${filesize} pocketbeagle2-workshop-${export_filename} --dtb pocketbeagle2-swap --enable-load-pb2-workshop"
+	#sudo ./setup_sdcard.sh --img-${filesize} pocketbeagle2-workshop-${export_filename} --dtb pocketbeagle2-swap --enable-load-pb2-workshop
+	#mv ./*.img ../
+	#cp -v ./syft.spdx.json.xz ../ || true
 
 	cd ../
 
 	r_description="no desktop environment"
 	r_short_desc="IoT"
 
-	r_board="BeagleY-AI"
-	unset r_board_adv
-	r_processor="TI AM67A (J722S)"
-	r_devices="beagle-am67"
+	#r_board="BeagleY-AI"
+	#unset r_board_adv
+	#r_processor="TI AM67A (J722S)"
+	#r_devices="beagle-am67"
 
-	r_name="v${r_kernel}.x-k3 ${r_short_desc}"
-	device="beagley-ai" ; compress_snapshot_image
+	#r_name="v${r_kernel}.x-k3 ${r_short_desc}"
+	#device="beagley-ai" ; compress_snapshot_image
 
 	r_board="BeagleBone AI-64"
 	unset r_board_adv
@@ -141,8 +141,8 @@ if [ -d ./deploy/${export_filename}/ ] ; then
 	r_name="v${r_kernel}.x-k3 ${r_short_desc}"
 	device="pocketbeagle2" ; compress_snapshot_image
 
-	r_name="v${r_kernel}.x-k3 ${r_short_desc} (TechLab Workshop)"
-	device="pocketbeagle2-workshop" ; compress_snapshot_image
+	#r_name="v${r_kernel}.x-k3 ${r_short_desc} (TechLab Workshop)"
+	#device="pocketbeagle2-workshop" ; compress_snapshot_image
 
 	rm -rf ${tempdir} || true
 	cd ../
